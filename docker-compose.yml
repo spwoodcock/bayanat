@@ -3,18 +3,20 @@ version: '3'
 services:
   postgres:
     container_name: postgres
-    image: 'postgres:9.5'
-    env_file:
-      - '.env'
+    image: 'docker.io/postgis/postgis:14-3.3'
+    environment:
+      - POSTGRES_PASSWORD=ai4ncF6GpHokPaNmW25UftzMjM7hrC
     volumes:
       - './postgres-data:/var/lib/postgresql'
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres"]
     ports:
-      - '5432:5432'
+      - '5444:5432'
 
   redis:
     container_name: redis 
-    image: 'redis:4.0-alpine'
-    command: redis-server --requirepass verystrongpass
+    image: 'docker.io/redis:4.0-alpine'
+    command: redis-server --requirepass nuX4X62C49tq
     volumes:
       - './redis-data:/var/lib/redis/data'
     ports:
@@ -31,7 +33,6 @@ services:
       - redis
     ports:
       - '8000:5000'
-
 
   nginx:
     container_name: nginx
@@ -52,7 +53,6 @@ services:
       - redis
     volumes:
       - '.:/enferno-plat'
-
 
 volumes:
   enferno:
