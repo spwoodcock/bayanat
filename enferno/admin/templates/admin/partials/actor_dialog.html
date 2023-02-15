@@ -330,11 +330,14 @@
                                 ></v-select>
                             </v-col>
 
-
-                            <v-col cols="3" class="align-center d-flex">
-                                <pop-date-field label="{{ _('Date of Birth') }}" v-model="editedItem.birth_date"></pop-date-field>
-
-
+                            <v-col md="3">
+                                <v-select
+                                        :items="translations.conditionTypes"
+                                        v-model="editedItem.condition"
+                                        item-text="tr"
+                                        item-value="en"
+                                        label="{{ _('Condition') }}"
+                                ></v-select>
                             </v-col>
                         </v-row>
 
@@ -1304,6 +1307,17 @@
                                                      v-model="editedItem.documentation_date"></pop-date-time-field>
                             </v-col>
 
+                        </v-row>
+                        <v-row>
+                            <v-col cols="12" md="9">
+                                <!-- Empty space -->
+                            </v-col>
+
+                            <v-col cols="12" md="3">
+
+                                <pop-date-time-field time-label="{{ _('Time')  }}"  label="{{ _('Verification Date')}}"
+                                                     v-model="editedItem.verification_date"></pop-date-time-field>
+                            </v-col> 
                         </v-row>
                         <v-row>
                             <v-col cols="12" md="8">

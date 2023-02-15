@@ -82,6 +82,14 @@
 
 
                                         <v-spacer></v-spacer>
+                                        <v-btn
+                                                @click="emptyDialog = true"
+                                                color="primary"
+                                                dark
+                                                class="ma-2"
+                                        >{{ _('Open Dialog') }}</v-btn
+                                        >
+
                                         {% if current_user.roles_in(['Admin','DA']) %}
                                             <v-btn
                                                     @click="editItem"
@@ -284,6 +292,14 @@
                             </v-dialog>
 
 
+
+                            <v-dialog width="600" v-model="emptyDialog">
+                                <v-card class="pa-3">
+                                    <v-card-title>Empty Dialog</v-card-title>
+                                </v-card>
+                            </v-dialog>
+
+
                             <v-snackbar v-model="snackbar">
                                 <div class="d-flex justify-space-between align-center">
                                     <span class="text-subtitle-1">${snackMessage}</span>
@@ -379,6 +395,7 @@
 
                 assignBulletin: {},
                 selfAssignDialog: false,
+                emptyDialog: false,
 
                 //global preview dialog
                 preview: false,

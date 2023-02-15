@@ -525,7 +525,13 @@ Vue.component('actor-search-box', {
         </v-row>
         <v-row>
           <v-col cols="12" md="6">
-            <pop-date-field :label="i18n.birthDate_" v-model="q.birth_date"></pop-date-field>
+            <v-select
+                item-text="tr"
+                item-value="en"
+                :items="translations.conditionTypes"
+                v-model="q.condition"
+                :label="i18n.condition_"
+            ></v-select>
           </v-col>
           <v-col md="6">
             <v-text-field dense :label="i18n.nationalIdCard_" v-model="q.national_id_card"></v-text-field>

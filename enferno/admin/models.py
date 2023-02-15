@@ -1,5 +1,6 @@
 import json
 import os
+import enum
 from datetime import datetime
 from functools import wraps
 from pathlib import Path
@@ -7,7 +8,7 @@ from tempfile import NamedTemporaryFile
 
 import pandas as pd
 from flask_login import current_user
-from sqlalchemy import JSON, ARRAY, text
+from sqlalchemy import JSON, ARRAY, text, Enum
 from sqlalchemy.dialects.postgresql import TSVECTOR, JSONB
 from sqlalchemy.orm.attributes import flag_modified
 from werkzeug.utils import secure_filename
@@ -64,6 +65,12 @@ def check_relation_roles(method):
             }
         return method_output
     return _impl
+
+
+class ConditionOpts(enum.Enum):
+    alive = 1
+    unknown = 0
+    dead = -1
 
 
 ######  -----  ######
@@ -2027,7 +2034,7 @@ class Actor(db.Model, BaseMixin):
     sex = db.Column(db.String(255))
     age = db.Column(db.String(255))
     civilian = db.Column(db.String(255))
-    birth_date = db.Column(db.DateTime)
+    condition = db.Column(Enum(ConditionOpts))
 
     birth_place_id = db.Column(db.Integer, db.ForeignKey("location.id"))
     birth_place = db.relationship(
@@ -2061,6 +2068,7 @@ class Actor(db.Model, BaseMixin):
 
     publish_date = db.Column(db.DateTime, index=True)
     documentation_date = db.Column(db.DateTime, index=True)
+    verification_date = db.Column(db.DateTime, index=True)
 
     status = db.Column(db.String(255))
     source_link = db.Column(db.String(255))
@@ -2247,9 +2255,9 @@ class Actor(db.Model, BaseMixin):
         self.civilian = json["civilian"] if "civilian" in json else None
         self.actor_type = json["actor_type"] if "actor_type" in json else None
 
-        if "birth_date" in json:
-            if json["birth_date"]:
-                self.birth_date = json["birth_date"]
+        if "condition" in json:
+            if json["condition"]:
+                self.condition = json["condition"]
 
         if "birth_place" in json:
             if json["birth_place"] and "id" in json["birth_place"]:
@@ -2317,6 +2325,9 @@ class Actor(db.Model, BaseMixin):
         self.documentation_date = json.get('documentation_date', None)
         if self.documentation_date == '':
             self.documentation_date = None
+        self.verification_date = json.get('verification_date', None)
+        if self.verification_date == '':
+            self.verification_date = None
 
         # Related Actors (actor_relations)
         if "actor_relations" in json:
@@ -2558,6 +2569,7 @@ class Actor(db.Model, BaseMixin):
             "source_link_type": getattr(self, "source_link_type"),
             "publish_date": DateHelper.serialize_datetime(self.publish_date),
             "documentation_date": DateHelper.serialize_datetime(self.documentation_date),
+            "verification_date": DateHelper.serialize_datetime(self.verification_date),
         }
 
     def get_modified_date(self):
@@ -2772,11 +2784,10 @@ class Actor(db.Model, BaseMixin):
             else None,
             "origin_place": self.origin_place.to_dict() if self.origin_place else None,
 
-            "birth_date": self.birth_date.strftime("%Y-%m-%d")
-            if self.birth_date
-            else None,
+            "condition": self.condition if self.condition else None,
             "publish_date": DateHelper.serialize_datetime(self.publish_date),
             "documentation_date": DateHelper.serialize_datetime(self.documentation_date),
+            "verification_date": DateHelper.serialize_datetime(self.verification_date),
             "status": self.status,
             "review": self.review if self.review else None,
             "review_action": self.review_action if self.review_action else None,
@@ -2813,6 +2824,7 @@ class Actor(db.Model, BaseMixin):
             "sources": sources_json,
             "publish_date": DateHelper.serialize_datetime(self.publish_date),
             "documentation_date": DateHelper.serialize_datetime(self.documentation_date),
+            "verification_date": DateHelper.serialize_datetime(self.verification_date),
             "status": self.status if self.status else None,
 
         }

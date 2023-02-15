@@ -231,7 +231,7 @@ Vue.component("actor-card", {
         <uni-field :caption="i18n.actorType_" :english="actor._actor_type"></uni-field>
 
       </div>
-      <uni-field :caption="i18n.birthDate_" :english="actor.birth_date"></uni-field>
+      <uni-field :caption="i18n.condition_" :english="actor.condition"></uni-field>
       <uni-field :caption="i18n.birthPlace_" v-if="actor.birth_place" :english="actor.birth_place.full_string"></uni-field>
       <uni-field :caption="i18n.residencePlace_" v-if="actor.residence_place"
                  :english="actor.residence_place.full_string"></uni-field>
@@ -434,6 +434,7 @@ Vue.component("actor-card", {
       <div class="d-flex">
         <uni-field :caption="i18n.publishDate_" :english="actor.publish_date"></uni-field>
         <uni-field :caption="i18n.documentationDate_" :english="actor.documentation_date"></uni-field>
+        <uni-field :caption="i18n.verificationDate" :english="actor.verification_date"></uni-field>
       </div>
       <uni-field :caption="i18n.sourceLink_" :english="actor.source_link"></uni-field>
 

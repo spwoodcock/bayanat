@@ -1,5 +1,6 @@
 var translations = {
 newBulletin_: "{{ _('New Bulletin') }}",
+openDialog_: "{{ _('Open Dialog') }}",
 editBulletin_: "{{ _('Edit Bulletin') }}",
 newActor_: "{{ _('New Actor') }}",
 editActor_: "{{ _('Edit Actor') }}",
@@ -16,6 +17,7 @@ inRef_: "{{ _('Include Refs') }}",
 exRef_: "{{ _('Exclude Refs') }}",
 publishDate_: "{{ _('Publish date') }}",
 documentationDate_: "{{ _('Documentation date') }}",
+verificationDate_: "{{ _('Verification date') }}",
 createdDate_: "{{ _('Creation date') }}",
 updatedDate_: "{{ _('Last modified date') }}",
 eventDate_: "{{ _('Event date') }}",
@@ -61,7 +63,7 @@ actorType_ : "{{ _('Actor Type') }}",
 ethnography_ : "{{ _('Ethnography') }}",
 nationality_ : "{{ _('Nationality') }}",
 birthPlace_ : "{{ _('Place of birth') }}",
-birthDate_ : "{{ _('Date of birth') }}",
+condition_ : "{{ _('Condition') }}",
 nationalIdCard_ : "{{ _('National ID Card') }}",
 yes_: "{{ _('Yes') }}",
 no_: "{{ _('No') }}",
@@ -422,6 +424,12 @@ countries :
 actorTypes: [
 {"en": "Person", "tr": "{{ _('Person') }}"},
 {"en": "Entity", "tr": "{{ _('Entity') }}"}
+],
+
+conditionTypes: [
+{"en": "Alive", "tr": "{{ _('Alive') }}"},
+{"en": "Unknown", "tr": "{{ _('Unknown') }}"},
+{"en": "Dead", "tr": "{{ _('Dead') }}"}
 ],
 
 actorSex: [

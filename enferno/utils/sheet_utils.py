@@ -15,6 +15,7 @@ config_dict = {
     'sex': 'actorSex',
     'civilian':'actorCivilian',
     'actor_type': 'actorTypes',
+    'condition': 'conditionTypes',
     'ethnography': 'actorEthno',
     'nationality': 'countries',
     'physique': 'physique',
