@@ -11,7 +11,7 @@ services:
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "postgres"]
     ports:
-      - '5444:5432'
+      - '5432:5432'
 
   redis:
     container_name: redis 
